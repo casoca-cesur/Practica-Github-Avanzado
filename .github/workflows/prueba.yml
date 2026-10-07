@@ -1,0 +1,21 @@
+name: Prueba de Tokens
+
+on:
+  push:
+
+jobs:
+  comparar-tokens:
+    runs-on: self-hosted
+    steps:
+      - name: Comparar DEV_TOKEN (Secret) con LOCAL_DEV_TOKEN (Local)
+        env:
+          GH_SECRET_DEV: ${{ secrets.DEV_TOKEN }}
+        shell: bash
+        run: |
+          echo "Comparando tokens..."
+          
+          if [ "$GH_SECRET_DEV" == "$LOCAL_DEV_TOKEN" ]; then
+            echo "✅ ¡Éxito! El secreto de GitHub coincide con la variable local."
+          else
+            echo "❌ ¡Error! Los tokens NO coinciden o la variable local no está disponible."
+          fi
