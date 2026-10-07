@@ -14,9 +14,9 @@ jobs:
         run: |
           Write-Output "Comparando tokens..."
           
-          # En PowerShell las variables de entorno se llaman con $env:
           if ($env:GH_SECRET_DEV -eq $env:LOCAL_DEV_TOKEN) {
-            Write-Output "✅ ¡Éxito! El secreto de GitHub coincide con la variable local."
+            Write-Output "Los tokens coinciden"
           } else {
-            Write-Output "❌ ¡Error! Los tokens NO coinciden o la variable local no está disponible."
+            Write-Output "Los tokens no coinciden"
+            exit 1
           }
