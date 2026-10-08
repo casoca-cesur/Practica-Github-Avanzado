@@ -8,22 +8,32 @@ on:
   workflow_dispatch:
   
 jobs: 
-  hosted-first:
-    runs-on: ubuntu-latest
-    steps: 
-      - name: Clonar repositorio
-        run: git clone https://github.com/casoca-cesur/Practica-Github-Avanzado.git
-      - name: Entrar en github
-        run: git config --global user.name "casoca-cesur" && git config --global user.email "carmen.s607893@cesurformacion.com"
-      - name: Añadir cambio
-        run: 'cd Practica-Github-Avanzado && echo "Añadida feature: $GITHUB_REF_NAME" >> README.md'
-      - name: Subir cambios
-        run: cd Practica-Github-Avanzado && git add README.md && git commit -m "Cambio en README" && git push
+  upload-readme:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Clone repo
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: git clone https://x-access-token:${GH_TOKEN}@github.com/casoca-cesur/Practica-Github-Avanzado.git
+              
+            - name: Add new line to README.md
+              run: 'cd Practica-Github-Avanzado && echo "Añadida feature: $GITHUB_REF_NAME" >> README.md'
+
+            - name: Upload changes
+              run: |
+                cd Practica-Github-Avanzado
+                git config --global user.name "casoca-cesur"
+                git config --global user.email "carmen.s607893@cesurformacion.com"
+                git add README.md
+                git commit -m "Cambio en README.md"
+                git push
 
 
   second:
     runs-on: self-hosted
-    needs: hosted-first
+    needs: upload-readme
     steps:
       - name: Validar secret
         env:
