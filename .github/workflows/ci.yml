@@ -29,7 +29,7 @@ jobs:
                 git add README.md
                 git commit -m "Cambio en README.md"
                 git checkout -b develop
-                git push -u develop:develop
+                git push -u origin develop:develop
 
 
   second:
