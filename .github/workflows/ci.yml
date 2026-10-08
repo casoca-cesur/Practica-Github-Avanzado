@@ -13,6 +13,8 @@ jobs:
     steps: 
       - name: Clonar repositorio
         run: git clone https://github.com/casoca-cesur/Practica-Github-Avanzado.git
+      - name: Entrar en github
+        run: git config --"casoca-cesur"
       - name: Añadir cambio
         run: 'cd Practica-Github-Avanzado && echo "Añadida feature: $GITHUB_REF_NAME" >> README.md'
       - name: Subir cambios
